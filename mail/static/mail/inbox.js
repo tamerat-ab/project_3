@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#compose').addEventListener('click', compose_email);
   document.querySelector('#compose-form').addEventListener('submit', sendmail);
   document.querySelector('#archive').addEventListener('click', archive);
-
+  localStorage.clear();
+  
   // By default, load the inbox
  load_mailbox('inbox');
 
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function compose_email() {
+ 
 
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
@@ -26,7 +28,8 @@ function compose_email() {
 }
 
 function load_mailbox(mailbox) {
-
+  
+   
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
   document.querySelector('#compose-view').style.display = 'none';
@@ -39,8 +42,14 @@ function load_mailbox(mailbox) {
 
    
     console.log(data);
+   count=data.length;
+ 
+   
+  
+      
 
-    for (let i=0; i < data.length; i++) {
+    for (let i=0; i < count; i++) {
+     
       let send=data[i]['sender']
       let id=data[i]['id']
       let time=data[i]['timestamp']
@@ -61,9 +70,10 @@ function load_mailbox(mailbox) {
         div.appendChild(butt);
         
         document.querySelector('#emails-view').appendChild (butt)
-       
+        
+      // i=count
       };
-   
+      
         document.querySelectorAll('#button').forEach(function(button){button.onclick=function(){
         fetch(`/emails/${button.dataset.email_id}`)
         .then(response=>response.json())
@@ -110,7 +120,7 @@ function load_mailbox(mailbox) {
       document.querySelector('#compose-view').style.display = 'block';
       // document.querySelector('#ls').style.display = 'block';
       document.querySelector('#email-detail').style.display = 'none';
-
+ 
 
       document.querySelector('#compose-recipients').value = sender;
       if (subject){
@@ -121,6 +131,7 @@ function load_mailbox(mailbox) {
   
   // Show the mailbox name
    document.querySelector('#mailbox_name').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+  
 }
 
 // document.querySelectorAll('#button').forEach(function(button){button.onclick=function(){
@@ -137,10 +148,6 @@ function load_mailbox(mailbox) {
 //   }
 
 
-
-//submit the mail message
-
-// document.addEventListener('DOMcontentLoaded', function() {
 
  function sendmail(){
   // document.querySelector('#compose-form').onsubmit=function(){
@@ -164,10 +171,5 @@ function load_mailbox(mailbox) {
              })
              }
             
-//  }
-      
-     
-//  return false;
-// })
 
 
