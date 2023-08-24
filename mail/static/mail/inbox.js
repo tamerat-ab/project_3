@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
   document.querySelector('#compose').addEventListener('click', compose_email);
   document.querySelector('#compose-form').addEventListener('submit', sendmail);
+  document.querySelector('#archive').addEventListener('click', archive);
 
   // By default, load the inbox
  load_mailbox('inbox');
@@ -48,15 +49,21 @@ function load_mailbox(mailbox) {
       
         
         
-         const li=document.createElement('button');
-         li.setAttribute('data-email_id', `${id}`);
-         li.setAttribute('id', 'button');
+         const butt=document.createElement('button');
+         butt.setAttribute('data-email_id', `${id}`);
+         butt.setAttribute('id', 'button');
          const div=document.createElement('div');
-         div.setAttribute("id", 'color');
-         li.appendChild(document.createTextNode(id));
-         div.appendChild(li);
-        document.querySelector('#emails-view').appendChild (div)}
-
+         div.setAttribute("id", 'email_lines');
+        
+         butt.appendChild(document.createTextNode(send));
+         butt.appendChild(document.createTextNode(subject));
+         butt.appendChild(document.createTextNode(time))
+        div.appendChild(butt);
+        
+        document.querySelector('#emails-view').appendChild (butt)
+       
+      };
+   
         document.querySelectorAll('#button').forEach(function(button){button.onclick=function(){
         fetch(`/emails/${button.dataset.email_id}`)
         .then(response=>response.json())
@@ -73,16 +80,61 @@ function load_mailbox(mailbox) {
          document.querySelector('#div2').innerHTML=subject;
          document.querySelector('#div3').innerHTML=body})
         
-        
-       }})  })
+        fetch(`/emails/${button.dataset.email_id}`,
+        {method: 'PUT',
+         body:JSON.stringify({read:true})}
+         )
+        // DON'T FORGET THE COLOR OF THE BLOCK
+        document.querySelector('#button').style.background='grey'
+     
 
-  
-    // console.log(send)
+    document.querySelector('#archive').onclick = function() {    
+    fetch(`/emails/${button.dataset.email_id}`,
+   {method: 'PUT',
+   body: JSON.stringify({
+    archived: true}
+    )})
+    .then(response => response)
+    .then(response =>{ alert('archived'); console.log(response)
+    })}
+        
+
+       }})  })
+   
+    
+       
+    document.querySelector('#replay').onclick = function() {
+
+
+      document.querySelector('#emails-view').style.display = 'none';
+      document.querySelector('#compose-view').style.display = 'block';
+      // document.querySelector('#ls').style.display = 'block';
+      document.querySelector('#email-detail').style.display = 'none';
+
+
+      document.querySelector('#compose-recipients').value = sender;
+      if (subject){
+      document.querySelector('#compose-subject').value =`Re${subject}`};
+      document.querySelector('#compose-body').innerHTML =body }
+   
     
   
   // Show the mailbox name
    document.querySelector('#mailbox_name').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
 }
+
+// document.querySelectorAll('#button').forEach(function(button){button.onclick=function(){
+//   fetch(`/emails/${button.dataset.email_id}`)
+// function archive(email_id) {
+
+//   fetch(`/emails/${email_id}`,
+//    {method: 'PUT',
+//    body: JSON.stringify({
+//     archived: true}
+//     )})
+//     .then(response => response.json())
+//     .then(response =>{ alert(response)} )
+//   }
 
 
 

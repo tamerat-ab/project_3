@@ -1,6 +1,6 @@
 {% extends "mail/layout.html" %}
 {% load static %}
-
+<style> #emails-view{ width:100%} </style>
 {% block body %}
     <h2>{{ request.user.email }}</h2>
 
@@ -24,6 +24,7 @@
         sender:  <div id="div1"></div> <br>
        subject:  <div id="div2"></div><br>
          body: <div id="div3"></div>
+         <button id="archive">Archive</button> <button id="replay">Replay</button>
     </div>
 
     <div id="compose-view">
