@@ -15,6 +15,8 @@ load_mailbox('inbox');
 
 function load_mailbox(mailbox) {
   
+  document.querySelector('#mgf-div').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`
+
   var inbox_view=document.querySelector('#inbox-view')
   var send_view=document.querySelector('#send-view')
   var archive_view=document.querySelector('#archive-view')
@@ -175,7 +177,7 @@ function load_mailbox(mailbox) {
     })}
       
 
-
+// replays email
 document.addEventListener('DOMContentLoaded', function(e) {
   document.querySelector('#replay').onclick = function() {
 
@@ -191,8 +193,11 @@ document.addEventListener('DOMContentLoaded', function(e) {
           document.querySelector('#compose-subject').value =`Re${subject}`};
           document.querySelector('#compose-body').innerHTML =body }
 
+       
+
 });
 
+// composes email
 document.addEventListener('DOMContentLoaded',() => {
 
   document.querySelector('#compose').onclick = function() {
@@ -212,7 +217,7 @@ document.addEventListener('DOMContentLoaded',() => {
           e.stopPropagation();
           e.preventDefault();
           console.log(recipients,subject,body);
-          fetch('/emails',
+          fetch('/emails',                      //posts new composed email 
             {method: 'POST',
              body: JSON.stringify({
                   recipients:`${recipients}`,
