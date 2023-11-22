@@ -8,6 +8,54 @@
         <link rel="stylesheet" href="{% static 'mail/styles.css' %}">
         {% block script %}
         {% endblock %}
+        <style>
+            .email-div{
+                /* border-style: solid;
+                display: flex;
+                flex-direction: row; 
+                width: 90%;
+                height:90%;
+                position: relative; */
+              
+      width: 95%;    
+      display: flex;
+      flex-direction:row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: stretch;
+      align-content: stretch;
+      margin-top: 1%; 
+      position: relative;
+      height: 20%;
+            }
+            #email-white{
+             background-color:white;
+            }
+
+            #email-grey{
+                background-color: grey;
+            }
+            #subject-div{
+                
+                margin-left: 4%;
+                width:30%;
+               height: 100%;
+                position: relative;}
+
+            #time-div{
+                margin-left: 30%;
+                color: brown;
+                 margin-right:4%; 
+                width:20%; 
+                /* height: 1%; */
+                position: relative;}
+            #sender-div{
+                /* height: 100%; */
+                margin: 2%;
+                width:20%;
+                position: relative;
+            }
+        </style>
     </head>
     <body>
         <div class="container">

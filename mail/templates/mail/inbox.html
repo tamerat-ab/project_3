@@ -1,5 +1,5 @@
 {% extends "mail/layout.html" %}
-{% load static %}
+<!-- {% load static %} -->
 <style> #emails-view{ width:100%} </style>
 {% block body %}
     <h2>{{ request.user.email }}</h2>
@@ -12,19 +12,27 @@
     <hr>
 
     <div id="emails-view">
-        <div id="mailbox_name">
+        <div id="inbox-view">
 
         </div>
-        <ol id="id">
+        
+        <div id="send-view">
 
-        </ol>
+        </div>
+
+        <div id="archive-view">
+
+        </div>
+
+    
      
     </div>
+
     <div id="email-detail">
         sender:  <div id="div1"></div> <br>
        subject:  <div id="div2"></div><br>
          body: <div id="div3"></div>
-         <button id="archive">Archive</button> <button id="replay">Replay</button>
+         <button id="archive">Archive</button>  <button id="unarchive">Unarchive</button>  <button id="replay">Replay</button>
     </div>
 
     <div id="compose-view">
@@ -47,6 +55,6 @@
    
 {% endblock %}
 
-{% block script %}
+<!-- {% block script %}
     <script src="{% static 'mail/inbox.js' %}"></script>
-{% endblock %}
+{% endblock %} -->

@@ -22,7 +22,7 @@ def index(request):
 
 
 @csrf_exempt
-@login_required
+# @login_required
 def compose(request):
 
     # Composing a new email must be via POST
