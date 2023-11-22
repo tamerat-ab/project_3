@@ -61,7 +61,7 @@ function load_mailbox(mailbox) {
       const email_div=document.createElement('div')
       email_div.setAttribute('data-email_id' ,`${id}`)
       email_div.setAttribute('class', 'email-div')
-      
+
       if (data[i]['read']==true){
       email_div.setAttribute('id', 'email-grey') 
       }
@@ -99,8 +99,8 @@ function load_mailbox(mailbox) {
          send_view.append(email_div)
         document.querySelector('#sent').onclick=()=>{send_view.innerHTML='' } //prevent redendency
      }
-     else{archive_view.append(email_div)}
-     document.querySelector('#archived').onclick='null'
+     else{archive_view.append(email_div)
+     document.querySelector('#archived').onclick=()=>{archive_view.innerHTML=''}} //prevent redendency
       };
 
       // end of boxs
@@ -109,10 +109,13 @@ function load_mailbox(mailbox) {
       document.querySelectorAll('.email-div').forEach(function(button){button.onclick=function(){
                 fetch(`/emails/${button.dataset.email_id}`)
                 .then(response=>response.json())
-                .then(email=>{
-        
-                 sender=email.sender
+                .then(email=>{ console.log(email)
+           
+                 send=email.sender
+                 console.log(send)
+                 recipient=email.recipients
                  subject= email.subject
+                 timestamp=email.timestamp
                  body=email.body
                  if(mailbox=='sent'){
                  document.querySelector('#archive').style.display='none'
@@ -127,12 +130,14 @@ function load_mailbox(mailbox) {
                   document.querySelector('#unarchive').style.display='block'
                  }
                  document.querySelector('#emails-view').style.display = 'none';
-                 document.querySelector('#compose-view').style.display = 'none';
+                //  document.querySelector('#compose-view').style.display = 'none';
                  document.querySelector('#email-detail').style.display = 'block';
-        
-                 document.querySelector('#div1').innerHTML=sender;
-                 document.querySelector('#div2').innerHTML=subject;
-                 document.querySelector('#div3').innerHTML=body})
+                 console.log(send)
+                 document.querySelector('#sender-sender').innerHTML=`From: ${send}`;
+                 document.querySelector('#recipient-recipient').innerHTML=`To: ${recipient}`;
+                 document.querySelector('#subject-subject').innerHTML=`Subject: ${subject}`;
+                 document.querySelector('#timestamp-timestamp').innerHTML=`Timestamp: ${timestamp}`;
+                 document.querySelector('#body-body').innerHTML=body})
                
 
                  fetch(`/emails/${button.dataset.email_id}`,
