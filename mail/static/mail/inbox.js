@@ -113,12 +113,12 @@ function load_mailbox(mailbox) {
                 .then(response=>response.json())
                 .then(email=>{ console.log(email)
            
-                 send=email.sender
-                 console.log(send)
-                 recipient=email.recipients
-                 subject= email.subject
-                 timestamp=email.timestamp
-                 body=email.body
+                 var send=email.sender
+                  console.log(send)
+                const  recipient=email.recipients
+                const subject= email.subject
+                const timestamp=email.timestamp
+                const body=email.body
                  if(mailbox=='sent'){
                  document.querySelector('#archive').style.display='none'
                  document.querySelector('#unarchive').style.display='none'
@@ -139,7 +139,28 @@ function load_mailbox(mailbox) {
                  document.querySelector('#recipient-recipient').innerHTML=`To: ${recipient}`;
                  document.querySelector('#subject-subject').innerHTML=`Subject: ${subject}`;
                  document.querySelector('#timestamp-timestamp').innerHTML=`Timestamp: ${timestamp}`;
-                 document.querySelector('#body-body').innerHTML=body})
+                 document.querySelector('#body-body').innerHTML=body
+                
+                
+                 document.querySelector('#replay').onclick = function() {
+
+
+                  document.querySelector('#emails-view').style.display = 'none';
+                  document.querySelector('#compose-view').style.display = 'block';
+                  // document.querySelector('#ls').style.display = 'block';
+                  document.querySelector('#email-detail').style.display = 'none';
+             
+            
+                  document.querySelector('#compose-recipients').value = send;
+                  if (subject){
+                  document.querySelector('#compose-subject').value =`Re: ${subject}`};
+                  document.querySelector('#compose-body').innerHTML =body 
+                }
+                
+                
+                
+                
+                })
                
 
                  fetch(`/emails/${button.dataset.email_id}`,
@@ -168,6 +189,23 @@ function load_mailbox(mailbox) {
                         })}
 
 
+
+                        // document.querySelector('#replay').onclick = function() { //start
+
+
+                        //   document.querySelector('#emails-view').style.display = 'none';
+                        //   document.querySelector('#compose-view').style.display = 'block';
+                        //   // document.querySelector('#ls').style.display = 'block';
+                        //   document.querySelector('#email-detail').style.display = 'none';
+                     
+                    
+                        //   document.querySelector('#compose-recipients').value = sender;
+                        //   if (subject){
+                        //   document.querySelector('#compose-subject').value =`Re${subject}`};
+                        //   document.querySelector('#compose-body').innerHTML =body 
+                        // }//end
+
+
 }})
                 // DON'T FORGET THE COLOR OF THE BLOCK
                
@@ -177,25 +215,7 @@ function load_mailbox(mailbox) {
     })}
       
 
-// replays email
-document.addEventListener('DOMContentLoaded', function(e) {
-  document.querySelector('#replay').onclick = function() {
 
-
-          document.querySelector('#emails-view').style.display = 'none';
-          document.querySelector('#compose-view').style.display = 'block';
-          // document.querySelector('#ls').style.display = 'block';
-          document.querySelector('#email-detail').style.display = 'none';
-     
-    
-          document.querySelector('#compose-recipients').value = sender;
-          if (subject){
-          document.querySelector('#compose-subject').value =`Re${subject}`};
-          document.querySelector('#compose-body').innerHTML =body }
-
-       
-
-});
 
 // composes email
 document.addEventListener('DOMContentLoaded',() => {
@@ -228,12 +248,12 @@ document.addEventListener('DOMContentLoaded',() => {
              .then(data=>{
              
               console.log(data)
-
+              window.location.reload();
              })
-
+           
             }
-            
+          
           }
-
+          
             })
 
